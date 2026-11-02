@@ -34,6 +34,21 @@ A storage account I never tagged came out tagged `costcenter: CC100`, because th
 
 `Set-GovernanceBaseline.ps1` (in progress): assigns the three policies at a scope you choose, with parameters for the allowed regions and the tag name. It gives the policy's identity its role and starts remediation.
 
+## Clean-up
+
+Order matters. A lock has to come off before its resource group can be deleted. The policy identity's role has to go before the policy does, or it's left behind as an orphaned assignment.
+
+```powershell
+Remove-AzResourceLock -LockName nodelete -ResourceGroupName '<resource group>' -Force
+Remove-AzResourceGroup -Name '<resource group>' -Force
+Remove-AzRoleAssignment -ObjectId '<policy identity object id>' -RoleDefinitionName 'Tag Contributor' -Scope '/subscriptions/<subscription id>'
+Remove-AzPolicyAssignment -Name inherit-costcenter -Scope '/subscriptions/<subscription id>'
+Remove-AzPolicyAssignment -Name require-costcenter -Scope '/subscriptions/<subscription id>'
+Remove-AzPolicyAssignment -Name allowed-locations -Scope '/subscriptions/<subscription id>'
+Remove-AzManagementGroupSubscription -GroupName mg-ridgeline -SubscriptionId '<subscription id>'
+Remove-AzManagementGroup -GroupName mg-ridgeline
+```
+
 ## Skills
 
 Azure Policy · policy effects (Deny, Modify) · remediation tasks · managed identities · management groups · resource locks · tagging

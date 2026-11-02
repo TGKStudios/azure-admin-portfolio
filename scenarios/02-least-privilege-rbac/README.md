@@ -27,6 +27,18 @@
 - `Grant-VmOperatorRole.ps1` (in progress): creates the custom role from `vm-operator-role.json` if it doesn't exist yet, then assigns it to a group at a resource-group scope. Safe to run twice.
 - `Find-OrphanedRoleAssignments.ps1` (in progress): lists role assignments whose user, group or app no longer exists, and removes them only when asked.
 
+## Clean-up
+
+Remove the assignments first. A custom role can't be deleted while it's assigned, and deleting a group or user first leaves orphaned assignments behind.
+
+```powershell
+Remove-AzRoleAssignment -ObjectId '<user or group object id>' -RoleDefinitionName 'Ridgeline VM Operator' -ResourceGroupName '<resource group>'
+Remove-AzRoleAssignment -ObjectId '<group object id>' -RoleDefinitionName 'Reader' -Scope '/subscriptions/<subscription id>'
+Remove-AzRoleDefinition -Name 'Ridgeline VM Operator' -Force
+```
+
+Remove the Entra role in the Entra admin center: Roles & admins → Password Administrator → Assignments.
+
 ## Skills
 
 Azure RBAC · custom role definitions · role scopes and inheritance · Microsoft Entra roles · role-assignable groups · Az PowerShell

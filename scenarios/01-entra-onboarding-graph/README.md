@@ -29,6 +29,15 @@ Lab tenant with a Microsoft Entra ID P2 trial.
 
 `New-RidgelineHire.ps1` (in progress): reads a CSV of hires, checks each row, creates the users with Microsoft Graph, and reports which dynamic group each one will land in.
 
+## Clean-up
+
+```powershell
+Remove-MgUser -UserId '<user principal name>'
+Remove-MgGroup -GroupId '<group id>'
+```
+
+Deleted users stay in the Entra recycle bin for 30 days. The P2 trial ends on its own.
+
 ## Skills
 
 Microsoft Entra ID · Microsoft Graph PowerShell · dynamic membership rules · group-based licensing · B2B collaboration · SSPR · bulk operations
