@@ -1,0 +1,3 @@
+#!/bin/sh
+# Runs the secret scan before every commit. If it finds something, the commit stops.
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(git rev-parse --show-toplevel)/tools/Test-NoSecrets.ps1"

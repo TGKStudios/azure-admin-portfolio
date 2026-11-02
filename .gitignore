@@ -1,0 +1,24 @@
+# Never commit these
+.secrets-denylist
+.env
+*.env
+*.publishsettings
+*.pfx
+*.pem
+*.key
+
+# Scripts still being written. When one works, rename it to drop ".draft", then git add it.
+*.draft.ps1
+
+# Local files created while running the scenarios
+*.log
+out/
+scratch/
+invoice*.txt
+manifest*.txt
+hires-real*.csv
+
+# Editor and Windows clutter
+.vscode/
+Thumbs.db
+desktop.ini
