@@ -24,6 +24,10 @@ Each guardrail blocked a different mistake, even for the subscription Owner.
 
 A storage account I never tagged came out tagged `costcenter: CC100`, because the inherit policy copied it from the resource group.
 
+![Policy compliance for the three assignments](proof/policy-compliance.png)
+
+`require-costcenter` shows 33% because `rg-lab2-ops` and `NetworkWatcherRG` existed before the policy and have no tag. A Deny policy blocks new violations and only flags what already exists.
+
 ## What broke, and how I fixed it
 
 | Symptom | Cause | Fix |
